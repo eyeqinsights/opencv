@@ -1,0 +1,12 @@
+language: cpp
+compiler:
+  - gcc
+  - clang
+before_script:
+  - mkdir ../opencv-build
+  - cd ../opencv-build
+  - cmake ../opencv
+script:
+  - make -j3
+notifications:
+  email: false
