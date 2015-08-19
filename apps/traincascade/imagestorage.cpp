@@ -48,13 +48,17 @@ bool CvCascadeImageReader::NegReader::create( const string _filename, Size _winS
 
 bool CvCascadeImageReader::NegReader::nextImg()
 {
+
     Point _offset = Point(0,0);
     size_t count = imgFilenames.size();
     for( size_t i = 0; i < count; i++ )
     {
         src = imread( imgFilenames[last++], 0 );
         if( src.empty() )
+        {
+            std::cout << "Can't read negative: " << imgFilenames[last-1] << std::endl;
             continue;
+        }
         round += last / count;
         round = round % (winSize.width * winSize.height);
         last %= count;

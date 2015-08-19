@@ -304,13 +304,19 @@ bool CvCascadeClassifier::updateTrainingSet( double minimumAcceptanceRatio, doub
     imgReader.restart();
     int posCount = fillPassedSamples( 0, numPos, true, 0, posConsumed );
     if( !posCount )
+    {
+        cout << "Error: can't find enough positive samples" << endl;
         return false;
+    }
     cout << "POS count : consumed   " << posCount << " : " << (int)posConsumed << endl;
 
     int proNumNeg = cvRound( ( ((double)numNeg) * ((double)posCount) ) / numPos ); // apply only a fraction of negative samples. double is required since overflow is possible
     int negCount = fillPassedSamples( posCount, proNumNeg, false, minimumAcceptanceRatio, negConsumed );
     if ( !negCount )
+    {
+        cout << "Error: can't find enough negative samples" << endl;
         return false;
+    }
 
     curNumSamples = posCount + negCount;
     acceptanceRatio = negConsumed == 0 ? 0 : ( (double)negCount/(double)(int64)negConsumed );
